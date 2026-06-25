@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1726">
+<title>DashLucros · Ranchos 30 Hotel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">R30</div>
+    <div class="title">
+      <h1 id="hotelName">DashLucros</h1>
+      <p>Faturamento e desempenho por chalé</p>
+    </div>
+    <div class="headright">
+      <div class="live"><span class="pulse"></span> ao vivo</div>
+      <div id="updated">—</div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="field">
+      <label>De (mês)</label>
+      <select id="mesDe"></select>
+    </div>
+    <div class="field">
+      <label>Até (mês)</label>
+      <select id="mesAte"></select>
+    </div>
+    <div class="field">
+      <label>Visão</label>
+      <div class="seg" id="visao">
+        <button data-v="chale" class="on">Por chalé</button>
+        <button data-v="categoria">Por categoria</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Categoria</label>
+      <select id="filtroCat"><option value="">Todas</option></select>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card" style="margin-bottom:14px">
+    <h2 id="trendTitle">Tendência de faturamento por mês</h2>
+    <p class="sub" id="trendSub">Clique numa barra pra focar o mês · clique num chalé na tabela pra ver a evolução dele</p>
+    <canvas id="trendChart" height="90"></canvas>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Ranking <span class="chip" id="rankChip"></span></h2>
+      <p class="sub" id="rankSub">Clique no cabeçalho pra ordenar · clique numa linha pra ver a evolução</p>
+      <div class="tablewrap"><table id="rankTable"></table></div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <h2>Consumo por PDV</h2>
+        <p class="sub">Frigobar, recepção, restaurante…</p>
+        <canvas id="pdvChart" height="170"></canvas>
+      </div>
+      <div class="card">
+        <h2>Formas de pagamento</h2>
+        <p class="sub">Como os hóspedes pagaram</p>
+        <canvas id="payChart" height="170"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="hintrow">DashLucros · dados do sistema Tô de Férias · atualização automática a cada 15 min</div>
+</div>
+
+<div class="loading" id="loading"><div style="text-align:center"><div class="spin"></div><div class="msg">Carregando dados…</div></div></div>
+
+<script src="app.js"></script>
+</body>
+</html>

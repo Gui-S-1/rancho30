@@ -1,0 +1,55 @@
+name: Coletar faturamento (DashLucros)
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'      # a cada 15 minutos
+  workflow_dispatch:            # botão "Run workflow" manual
+    inputs:
+      backfill:
+        description: 'Meses de histórico para recoletar (0 = só o mês atual)'
+        required: false
+        default: '0'
+
+permissions:
+  contents: write               # pra dar commit dos dados de volta no repo
+
+concurrency:
+  group: scrape
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependências
+        run: npm ci || npm install
+
+      - name: Instalar navegador (Chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: Coletar dados
+        env:
+          TDF_URL:  ${{ secrets.TDF_URL }}
+          TDF_USER: ${{ secrets.TDF_USER }}
+          TDF_PASS: ${{ secrets.TDF_PASS }}
+          HOTEL_NOME: ${{ vars.HOTEL_NOME }}
+        run: node scripts/scrape.mjs --backfill ${{ github.event.inputs.backfill || '0' }}
+
+      - name: Comitar dados atualizados
+        run: |
+          git config user.name  "dashlucros-bot"
+          git config user.email "bot@dashlucros.local"
+          git add public/data.json export/
+          if git diff --staged --quiet; then
+            echo "Sem mudanças nos dados."
+          else
+            git commit -m "dados: atualização automática $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

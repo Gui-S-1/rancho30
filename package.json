@@ -1,0 +1,16 @@
+{
+  "name": "dashlucros",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "scrape": "node scripts/scrape.mjs",
+    "scrape:backfill": "node scripts/scrape.mjs --backfill 12",
+    "preview": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "playwright": "^1.61.1"
+  },
+  "description": "DashLucros — coleta faturamento por chalé (Ranchos 30 Hotel) e publica dashboard + CSV",
+  "type": "module"
+}
