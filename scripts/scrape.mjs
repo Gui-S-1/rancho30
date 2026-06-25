@@ -93,9 +93,19 @@ function mesesAlvo() {
   const n = bi >= 0 ? parseInt(args[bi + 1] || '12', 10) : 0;
   const hoje = new Date();
   const lista = [];
-  for (let k = n; k >= 0; k--) {
-    const d = new Date(hoje.getFullYear(), hoje.getMonth() - k, 1);
-    lista.push([d.getFullYear(), d.getMonth()]);
+  if (n > 0) {
+    for (let k = n; k >= 0; k--) {
+      const d = new Date(hoje.getFullYear(), hoje.getMonth() - k, 1);
+      lista.push([d.getFullYear(), d.getMonth()]);
+    }
+  } else {
+    // nos primeiros 5 dias do mês, recoleta o mês anterior também
+    // (garante que vendas do fim do mês entrem mesmo após a virada)
+    if (hoje.getDate() <= 5) {
+      const p = new Date(hoje.getFullYear(), hoje.getMonth() - 1, 1);
+      lista.push([p.getFullYear(), p.getMonth()]);
+    }
+    lista.push([hoje.getFullYear(), hoje.getMonth()]);
   }
   return lista;
 }

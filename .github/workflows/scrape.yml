@@ -36,6 +36,7 @@ jobs:
 
       - name: Coletar dados
         env:
+          TZ: America/Sao_Paulo
           TDF_URL:  ${{ secrets.TDF_URL }}
           TDF_USER: ${{ secrets.TDF_USER }}
           TDF_PASS: ${{ secrets.TDF_PASS }}
