@@ -55,23 +55,22 @@
     <canvas id="trendChart" height="90"></canvas>
   </div>
 
-  <div class="grid">
+  <div class="card" style="margin-bottom:14px">
+    <h2>Ranking <span class="chip" id="rankChip"></span></h2>
+    <p class="sub" id="rankSub">Clique no cabeçalho pra ordenar (↑ crescente / ↓ decrescente) · clique numa linha pra ver a evolução do chalé</p>
+    <div class="tablewrap"><table id="rankTable"></table></div>
+  </div>
+
+  <div class="grid2">
     <div class="card">
-      <h2>Ranking <span class="chip" id="rankChip"></span></h2>
-      <p class="sub" id="rankSub">Clique no cabeçalho pra ordenar · clique numa linha pra ver a evolução</p>
-      <div class="tablewrap"><table id="rankTable"></table></div>
+      <h2>Consumo por PDV</h2>
+      <p class="sub">Frigobar, recepção, restaurante…</p>
+      <canvas id="pdvChart" height="150"></canvas>
     </div>
-    <div class="col">
-      <div class="card">
-        <h2>Consumo por PDV</h2>
-        <p class="sub">Frigobar, recepção, restaurante…</p>
-        <canvas id="pdvChart" height="170"></canvas>
-      </div>
-      <div class="card">
-        <h2>Formas de pagamento</h2>
-        <p class="sub">Como os hóspedes pagaram</p>
-        <canvas id="payChart" height="170"></canvas>
-      </div>
+    <div class="card">
+      <h2>Formas de pagamento</h2>
+      <p class="sub">Como os hóspedes pagaram</p>
+      <canvas id="payChart" height="150"></canvas>
     </div>
   </div>
 

@@ -52,6 +52,7 @@ select:focus,input:focus{border-color:var(--green)}
 
 /* cards */
 .grid{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .col{display:flex;flex-direction:column;gap:14px;min-width:0}
 .card{background:var(--card-solid);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:15px 16px;min-width:0}
 .card h2{margin:0 0 4px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
@@ -65,6 +66,9 @@ th,td{padding:9px 9px;text-align:right;white-space:nowrap;border-bottom:1px soli
 th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--card-solid)}
 th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:800;cursor:pointer;user-select:none}
 th:hover{color:var(--ink)}
+th .sa{font-size:11px;opacity:.4;margin-left:1px}
+th.sorton{color:var(--green)}
+th.sorton .sa{opacity:1}
 tbody tr{cursor:pointer;transition:background .12s}
 tbody tr:hover{background:#1b2942}
 tbody tr.sel{background:#16352a}
@@ -93,6 +97,7 @@ canvas{max-width:100%}
 
 @media(max-width:900px){
   .grid{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
   .kpis{grid-template-columns:repeat(2,1fr)}
   .headright{width:100%;margin-left:0;text-align:left}
   .wrap{padding:12px 11px 70px}

@@ -43,7 +43,7 @@ function periodoMeses() {
 function aggUnidades(ms) {
   const map = new Map();
   for (const m of ms) for (const u of m.unidades) {
-    const c = map.get(u.unidade) || { unidade: u.unidade, categoria: u.categoria, qtde: 0, faturamento: 0, diarias: 0, pessoas: 0, _ocup: 0, _revpar: 0, _n: 0 };
+    const c = map.get(u.unidade) || { ordem: u.ordem, unidade: u.unidade, categoria: u.categoria, qtde: 0, faturamento: 0, diarias: 0, pessoas: 0, _ocup: 0, _revpar: 0, _n: 0 };
     c.qtde += u.qtde; c.faturamento += u.faturamento; c.diarias += u.diarias; c.pessoas += u.pessoas;
     c._ocup += u.ocupacao; c._revpar += u.revpar; c._n++;
     map.set(u.unidade, c);
@@ -132,10 +132,16 @@ function renderTable(rows) {
     { k: 'ocupacao', label: 'Ocupação', t: 'occ' },
     { k: 'revpar', label: 'RevPAR', t: 'money' },
   ];
-  const sorted = [...rows].sort((a, b) => (a[state.sort.key] > b[state.sort.key] ? 1 : -1) * state.sort.dir);
+  const key = state.sort.key;
+  const getv = x => key === 'unidade' ? (x.ordem ?? x.unidade) : x[key];
+  const sorted = [...rows].sort((a, b) => { const av = getv(a), bv = getv(b); return (av > bv ? 1 : av < bv ? -1 : 0) * state.sort.dir; });
   const max = Math.max(1, ...rows.map(x => x.faturamento));
   const head = '<thead><tr><th class="rank">#</th>' +
-    cols.map(c => `<th data-k="${c.k}">${c.label}${state.sort.key === c.k ? (state.sort.dir < 0 ? ' ▾' : ' ▴') : ''}</th>`).join('') + '</tr></thead>';
+    cols.map(c => {
+      const on = key === c.k;
+      const arrow = on ? (state.sort.dir < 0 ? '↓' : '↑') : '↕';
+      return `<th data-k="${c.k}" class="${on ? 'sorton' : ''}">${c.label} <span class="sa">${arrow}</span></th>`;
+    }).join('') + '</tr></thead>';
   const body = '<tbody>' + sorted.map((x, i) => {
     const tds = cols.map(c => {
       if (c.t === 'txt') return `<td class="chale">${x.unidade}${isCat ? ` <span class="cat">(${x.unidades_qtd} un.)</span>` : `<div class="cat">${x.categoria}</div>`}</td>`;
